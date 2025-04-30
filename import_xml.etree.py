@@ -58,8 +58,8 @@ def build_xml_structure(parent_node, folders):
         
         for session in folder_data['sessions']:
             session_node = ET.SubElement(folder_node, "Node", Type="1")
-            ET.SubElement(session_node, "SavedSession").text = "Default Settings"
-            ET.SubElement(session_node, "DisplayName").text = session['ip']
+            ET.SubElement(session_node, "SavedSession").text = session['name']  # Added session name here
+            ET.SubElement(session_node, "DisplayName").text = session['name']  # Added session name here
             ET.SubElement(session_node, "UID").text = "{" + str(uuid.uuid4()).upper() + "}"
             ET.SubElement(session_node, "ServerName").text = session['ip']
             ET.SubElement(session_node, "PuttyConType").text = "4" if session['protocol'] == 'ssh' else "2"
@@ -86,8 +86,8 @@ def create_multiput_xml(folder_hierarchy, output_file):
     with open(output_file, 'wb') as f:
         f.write(pretty_xml)
 
-input_file = r"C:\Users\MobaXterm.mobaconf"
-output_file = r"C:\Users\multiput_sessions.xml"
+input_file = r"C:\Users\Desktop\MobaXterm.mobaconf"
+output_file = r"C:\Users\Desktop\multiput_sessions.xml"
 
 folder_hierarchy = parse_config(input_file)
 create_multiput_xml(folder_hierarchy, output_file)
